@@ -9,6 +9,7 @@
   ); */
   overflow: hidden;
   position: fixed;
+  object-fit: cover;
 }
 
 .scene {
