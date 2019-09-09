@@ -1,7 +1,7 @@
 // document.addEventListener("DOMContentLoaded", () => {
-//   const gameContainer = document.getElementsByClassName("scene");
+//   const gameContainer = document.getElementById("game-screen");
 
-//   gameContainer.addEventListener("click", function(e) {
-//     console.log("hello");
+//   document.addEventListener("click", function(e) {
+//     console.log(e.target);
 //   });
 // });
