@@ -10,21 +10,31 @@ body {
   /* codepen */
 }
 
-.target {
-  background-image: url("http://plug.nyc/wp-content/uploads/2019/09/target.png");
+#round-target {
   position: relative;
   height: 50px;
   width: 50px;
 }
 
 .visual > div {
-  position: absolute;
+  position: relative;
   height: 50px;
-  width: 50px;
-  border-radius: 50%;
+  width: auto;
+  background-image: url("http://plug.nyc/wp-content/uploads/2019/09/target.png");
+  /* border-radius: 50%; */
+  overflow: hidden;
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
   bottom: 0%;
-  border-style: dotted;
+
   border-color: white;
   border-width: 3px;
-  z-index: -1;
+
+  /* transition: height 1s ease-in-out;
+  transition: width 1s ease-in-out; */
+}
+
+.score-text {
+  color: white;
 }

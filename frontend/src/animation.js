@@ -4,6 +4,15 @@
 
 //   bg.insertAdjacentHTML("afterbegin", target);
 // });
+let screenWidth = document.body.clientWidth;
+let randomWidth = screenWidth * Math.random();
+randomWidth = Math.trunc(randomWidth);
+// const randomWidth = () => {
+//   let num = screenWidth * Math.random();
+
+//   Math.trunc(num);
+// };
+console.log(`rand: ${randomWidth}`);
 
 let loopBeat;
 let rand;
@@ -17,44 +26,62 @@ const colors = [
   "#606bd3",
   "#60c2d3"
 ];
+let time;
 
 loopBeat = new Tone.Loop(event, "16n");
 // set BPM
-Tone.Transport.bpm.value = 100;
+Tone.Transport.bpm.value = 5;
 Tone.Transport.start();
 loopBeat.start(0);
 
 let lastBeat;
 const visual = document.querySelector(".visual");
 
-const createBalls = () => {
-  const balls = document.createElement("div");
-  balls.style.left = `${rand * 1000}px`;
-  balls.style.right = `${rand * 1000}px`;
-  balls.style.backgroundColor = colors[counter];
+let score = 0;
 
-  visual.appendChild(balls);
-  balls.style.backgroundColor = colors[counter];
+const createRoundTarget = () => {
+  const target = document.createElement("div");
+  target.id = "round-target";
 
-  balls.animate(
+  target.style.left = `${randomWidth}px`;
+  target.style.right = `${randomWidth}px`;
+
+  visual.appendChild(target);
+  // target.style.backgroundColor = colors[counter];
+
+  target.animate(
     [
       // keyframes
       { transform: "translateY(0px)" },
-      { transform: "translateY(-300px)" }
-      // { backgroundPositionX: "left" }
+      { transform: "translateY(-100px)" }
+      // { height: "25px" }
     ],
     {
       // timing options
-      duration: 1000,
+      duration: 2000,
       iterations: Infinity
     },
     {
       direction: "alternate"
     }
   );
-
-  balls.addEventListener("animationend", function() {
-    balls.removeChild("div");
+  document.addEventListener("click", function(e) {
+    switch (e.target.id) {
+      case "round-target":
+        console.log("targeted");
+        e.target.remove();
+        score += 1;
+        console.log(`score is: ${score}`);
+        createRoundTarget();
+        break;
+      default:
+        break;
+    }
+    // console.log(e.target);
+    // target.removeChild("div");
+  });
+  target.addEventListener("animationend", function() {
+    target.removeChild("div");
   });
 };
 
@@ -63,13 +90,14 @@ function event() {
 
   let currentBeat = Tone.Transport.position.split(":");
   if (currentBeat[0] !== lastBeat) {
-    createBalls();
+    createRoundTarget();
     counter += 1;
-    rand = Math.random();
-    rand2 = Math.random();
+    randomWidth = Math.trunc(randomWidth);
+    // rand = Math.random();
+    // rand2 = Math.random();
     console.log(`This is counter:${counter}`);
-    console.log(`This is rand2:${rand2}`);
-    console.log(`This is rand:${rand}`);
+    // console.log(`This is rand2:${rand2}`);
+    // console.log(`This is rand:${rand}`);
     console.log(currentBeat[0]);
   }
   if (counter > 5) {
