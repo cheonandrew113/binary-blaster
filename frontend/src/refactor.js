@@ -23,9 +23,64 @@ document.querySelector("#start").addEventListener("click", () => {
   time = 0;
   setInterval(function() {
     time += 1;
-    console.log(`Time:${time}`);
+    const timerel = document.createElement("span");
+    timerel.id = "time-value";
+    timerel.innerText = `${time}`;
     timerContainer.innerText = `Timer: ${time}`;
+
+    // CONDITIONAL FOR RENDERING FORM
+
+    if (time === 30) {
+      let promptForName = prompt("Please enter your name");
+      console.log(promptForName);
+      // event();
+      // let yourScore = document.getElementById("user-score");
+      // yourScore = parseInt(yourScore.innerText);
+      // console.log(`score: ${score}`);
+
+      fetch(`http://localhost:3000/scores`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+
+          Accepts: "application/json"
+        },
+        body: JSON.stringify({
+          score: score,
+          player_name: promptForName
+        })
+      }).then(function(res) {
+        res.json();
+      });
+    }
+
+    let gameCont = document.getElementById("game-screen");
+    // let name = prompt("Please enter your name");
   }, 1000);
+
+  // if (time === 7) {
+  //   let promptForName = prompt("Please enter your name");
+  //   console.log(promptForName);
+  //   // event();
+  //   // let yourScore = document.getElementById("user-score");
+  //   // yourScore = parseInt(yourScore.innerText);
+  //   // console.log(`score: ${score}`);
+
+  //   fetch(`http://localhost:3000/scores`, {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+
+  //       Accepts: "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       score: score,
+  //       player_name: promptForName
+  //     })
+  //   });
+  // }
+
+  console.dir(time);
 
   // DOCUMENT QUERIES
   const visual = document.querySelector(".visual");
@@ -43,7 +98,7 @@ document.querySelector("#start").addEventListener("click", () => {
   }, 3000);
 
   // LOGS
-  console.log(`randon nm: ${randomWidth}`);
+  // console.log(`randon nm: ${randomWidth}`);
 
   // set BPM
   loopBeat = new Tone.Loop(event, "16n");
@@ -61,7 +116,7 @@ document.querySelector("#start").addEventListener("click", () => {
     // target.style.right = `${randomNum}px`;
 
     setInterval(function() {
-      console.log(target.getBoundingClientRect().y);
+      // console.log(target.getBoundingClientRect().y);
 
       //   let yPos = target.getBoundingClientRect().y;
       if (target.getBoundingClientRect().y < 600) {
@@ -78,6 +133,7 @@ document.querySelector("#start").addEventListener("click", () => {
         target.style.width = "50px";
       }
     }, 10);
+    //
 
     // setInterval(function() {
     //   let yPos = target.getBoundingClientRect().y;
@@ -128,7 +184,7 @@ document.querySelector("#start").addEventListener("click", () => {
       ],
       {
         // timing options
-        duration: 5000,
+        duration: 3000,
         iterations: Infinity
       },
       {
@@ -166,4 +222,12 @@ document.querySelector("#start").addEventListener("click", () => {
       console.log(currentBeat[0]);
     }
   }
+
+  // if ( != null) {
+  //   document.getElementById("demo").innerHTML =
+  //     "Hello " + person + "! How are you today?";
+  // }
+  // score saving to backend
+
+  // fetch(`http://localhost:3000/api/v1/scores/${}`)
 });

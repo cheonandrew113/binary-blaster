@@ -1,4 +1,4 @@
-class Api::V1::ScoresController < ApplicationController
+class ScoresController < ApplicationController
   before_action :set_score, only: [:show, :edit, :update, :destroy]
 
   # GET /scores
@@ -16,10 +16,19 @@ class Api::V1::ScoresController < ApplicationController
 
  
   # POST /scores
+  def new
+    @score = Score.new
+    render json: @score
+  end
+
+  
+
+
+
   # POST /scores.json
   def create
-    @score = Score.new(score_params)
-
+    @score = Score.new(score: params[:score], player_name: params[:player_name])
+    
     respond_to do |format|
       if @score.save
         format.html { redirect_to @score, notice: 'Score was successfully created.' }
@@ -35,7 +44,7 @@ class Api::V1::ScoresController < ApplicationController
   # PATCH/PUT /scores/1.json
   def update
     respond_to do |format|
-      if @score.update(score_params)
+      if @score.update(score: params[:score], player_name: params[:player_name])
         format.html { redirect_to @score, notice: 'Score was successfully updated.' }
         format.json { render :show, status: :ok, location: @score }
       else
@@ -62,7 +71,8 @@ class Api::V1::ScoresController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def score_params
-      params.require(:score).permit(:score, :player_name)
-    end
+    # def score_params
+    #   byebug
+    #   params.require(:scores).permit(:score, :player_name)
+    # end
 end
